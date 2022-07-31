@@ -1,6 +1,6 @@
 import React from "react";
 import { Wave } from "react-native-animated-spinkit";
-import { colors } from "../styles/styleConstants";
+import { colors } from "../style/styleConstants";
 
 interface SpinnerProps {
   color?: string;
@@ -8,7 +8,7 @@ interface SpinnerProps {
 }
 
 export const Spinner = ({
-  color = colors.colorTheme,
+  color = colors.themeColor,
   size = 50,
 }: SpinnerProps) => {
   return <Wave color={color} size={size} />;

@@ -1,11 +1,20 @@
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { Dimensions, ImageBackground, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React, { useState, useLayoutEffect } from "react";
+import {
+  Dimensions,
+  ImageBackground,
+  Text,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { LoadingScreen } from "../loading/LoadingScreen";
 
 export const WelcomeScreen = () => {
   const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
   //why is there only useWindowDimensions hook and not screen smh...
   const { width, height } = Dimensions.get("screen");
+  //as any for now
+  const navigation = useNavigation() as any;
 
   useLayoutEffect(() => {
     const timeout = setTimeout(() => {
@@ -17,20 +26,24 @@ export const WelcomeScreen = () => {
     return <LoadingScreen />;
   }
   return (
-    <ImageBackground
-      source={require("../../../assets/welcome.jpg")}
-      resizeMode="cover"
-      imageStyle={{
-        width,
-        height,
-        justifyContent: "flex-end",
-      }}
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate("InfoSliderScreen")}
     >
-      <View>
-        <Text className="text-themeColor">Welcome to</Text>
-        <Text> Best Buy</Text>
-        <Text>Best e-commerce app of the century for your daily needs!</Text>
-      </View>
-    </ImageBackground>
+      <ImageBackground
+        source={require("../../../assets/welcome.jpg")}
+        resizeMode="cover"
+        imageStyle={{
+          width,
+          height,
+          justifyContent: "flex-end",
+        }}
+      >
+        <View>
+          <Text className="text-themeColor">Welcome to</Text>
+          <Text> Best Buy</Text>
+          <Text>Best e-commerce app of the century for your daily needs!</Text>
+        </View>
+      </ImageBackground>
+    </TouchableWithoutFeedback>
   );
 };
