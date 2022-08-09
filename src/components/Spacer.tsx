@@ -1,5 +1,6 @@
 import React from "react";
 import { View, ViewStyle } from "react-native";
+import { sizes } from "../style/styleConstants";
 
 interface SpacerProps {
   extraSmall?: boolean;
@@ -8,14 +9,6 @@ interface SpacerProps {
   large?: boolean;
   extraLarge?: boolean;
 }
-
-const sizes = {
-  extraSmall: 4,
-  small: 8,
-  medium: 12,
-  large: 16,
-  extraLarge: 24,
-};
 
 export const Spacer = ({
   extraSmall,

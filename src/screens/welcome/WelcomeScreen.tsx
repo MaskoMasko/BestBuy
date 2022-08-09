@@ -1,49 +1,62 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState, useLayoutEffect } from "react";
+import React from "react";
 import {
   Dimensions,
   ImageBackground,
-  Text,
   TouchableWithoutFeedback,
   View,
+  StyleSheet,
 } from "react-native";
-import { LoadingScreen } from "../loading/LoadingScreen";
+import { Text } from "../../components/Text";
+import { LinearGradient } from "expo-linear-gradient";
 
 export const WelcomeScreen = () => {
-  const [showWelcomeScreen, setShowWelcomeScreen] = useState(false);
   //why is there only useWindowDimensions hook and not screen smh...
   const { width, height } = Dimensions.get("screen");
   //as any for now
   const navigation = useNavigation() as any;
 
-  useLayoutEffect(() => {
-    const timeout = setTimeout(() => {
-      setShowWelcomeScreen(true);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
-  if (!showWelcomeScreen) {
-    return <LoadingScreen />;
-  }
   return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate("InfoSliderScreen")}
-    >
+    <>
+      <TouchableWithoutFeedback
+        onPress={() => navigation.navigate("InfoSliderScreen")}
+      >
+        <LinearGradient
+          colors={["transparent", "rgba(0,0,0,0.7)"]}
+          style={styles.linearBackDrop}
+        />
+      </TouchableWithoutFeedback>
       <ImageBackground
         source={require("../../../assets/welcome.jpg")}
         resizeMode="cover"
         imageStyle={{
           width,
           height,
+        }}
+        style={{
+          flex: 1,
           justifyContent: "flex-end",
         }}
       >
-        <View>
-          <Text className="text-themeColor">Welcome to</Text>
-          <Text> Best Buy</Text>
-          <Text>Best e-commerce app of the century for your daily needs!</Text>
+        <View className="p-4 z-10">
+          <Text className="text-4xl text-textLight" semiBold>
+            Welcome to
+          </Text>
+          <Text className="text-6xl text-textLight py-3" bold>
+            Best Buy
+          </Text>
+          <Text className="text-textLight pb-6">
+            Best e-commerce app of the century for your daily needs!
+          </Text>
         </View>
       </ImageBackground>
-    </TouchableWithoutFeedback>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  linearBackDrop: {
+    ...StyleSheet.absoluteFillObject,
+    zIndex: 5,
+  },
+});

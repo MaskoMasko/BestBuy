@@ -4,10 +4,12 @@ import {
   FlatList,
   ImageBackground,
   StyleSheet,
-  Text,
+  TouchableOpacity,
   View,
   ViewToken,
 } from "react-native";
+import { Button } from "../../components/Button";
+import { Text } from "../../components/Text";
 import { colors } from "../../style/styleConstants";
 
 //fonts and tailwind docs next time
@@ -18,22 +20,23 @@ export const InfoSliderScreen = () => {
     {
       id: 1,
       imagePath: require("../../../assets/info-slider-1.jpg"),
-      text: "We provide high quality products just for you1",
+      text: "We provide high quality products just for you",
     },
     {
       id: 2,
       imagePath: require("../../../assets/info-slider-2.jpg"),
-      text: "We provide high quality products just for you2",
+      text: "Your satisfaction is our number one priority",
     },
     {
       id: 3,
       imagePath: require("../../../assets/info-slider-3.jpg"),
-      text: "We provide high quality products just for you3",
+      text: "Let's fulfill your house needs with Best Buy right now!",
     },
   ];
   const dots = new Array(sliderData.length).fill("");
 
   const [currentIndex, setCurrentIndex] = useState(0);
+  const flatListRef = useRef<FlatList | null>(null);
   const onViewRef = useRef(
     ({ viewableItems }: { viewableItems: ViewToken[] }) => {
       //if viewableItems[0].index = 0, it returns XD fml
@@ -45,6 +48,7 @@ export const InfoSliderScreen = () => {
   return (
     <>
       <FlatList
+        ref={flatListRef}
         data={sliderData}
         keyExtractor={(item) => item.id.toString()}
         pagingEnabled
@@ -52,12 +56,16 @@ export const InfoSliderScreen = () => {
         showsHorizontalScrollIndicator={false}
         viewabilityConfig={viewConfigRef.current}
         onViewableItemsChanged={onViewRef.current}
-        renderItem={({ item: slide }) => {
+        renderItem={({ item: slide, index }) => {
           return (
-            <ImageBackground
-              style={{ height: height * 0.8, width }}
-              source={slide.imagePath}
-            ></ImageBackground>
+            <>
+              {index === currentIndex && (
+                <ImageBackground
+                  style={{ height: height * 0.65, width }}
+                  source={slide.imagePath}
+                ></ImageBackground>
+              )}
+            </>
           );
         }}
       ></FlatList>
@@ -66,14 +74,15 @@ export const InfoSliderScreen = () => {
         style={{
           ...StyleSheet.absoluteFillObject,
           top: undefined,
-          height: "30%",
-          borderTopLeftRadius: 25,
-          borderTopRightRadius: 25,
+          height: "40%",
           backgroundColor: "white",
         }}
+        className=" items-center justify-center"
       >
-        <Text>{sliderData[currentIndex].text}</Text>
-        <View className="flex-row">
+        <Text semiBold className="text-3xl px-3 text-center">
+          {sliderData[currentIndex].text}
+        </Text>
+        <View className="flex-row py-6">
           {dots.map((_, id) => {
             return (
               <View
@@ -87,6 +96,22 @@ export const InfoSliderScreen = () => {
               ></View>
             );
           })}
+        </View>
+        <View className="flex-row">
+          <View className="flex-1 px-10">
+            <Button
+              title={
+                currentIndex === sliderData.length - 1 ? "Get Started" : "Next"
+              }
+              onPress={() => {
+                if (currentIndex + 1 > sliderData.length - 1) return;
+                flatListRef.current?.scrollToIndex({
+                  index: currentIndex,
+                });
+                setCurrentIndex(currentIndex + 1);
+              }}
+            />
+          </View>
         </View>
       </View>
     </>
