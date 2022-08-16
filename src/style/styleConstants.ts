@@ -7,6 +7,7 @@ export const colors = {
   warning: "#E86825",
   disabled: "#C7C7C7",
   textLightDark: "#E1E1E1",
+  disabledLight: "rgba(220,220,220,0.2)",
 };
 
 export const sizes = {

@@ -4,17 +4,18 @@ import {
   FlatList,
   ImageBackground,
   StyleSheet,
-  TouchableOpacity,
   View,
   ViewToken,
 } from "react-native";
 import { Button } from "../../components/Button";
+import { Screen } from "../../components/Screen";
 import { Text } from "../../components/Text";
+import type { ScreenProps } from "../../navigation/RouterTypes";
 import { colors } from "../../style/styleConstants";
 
 //fonts and tailwind docs next time
 
-export const InfoSliderScreen = () => {
+export const InfoSliderScreen = ({ navigation }: ScreenProps) => {
   const { height, width } = Dimensions.get("window");
   const sliderData = [
     {
@@ -46,7 +47,7 @@ export const InfoSliderScreen = () => {
   );
   const viewConfigRef = useRef({ viewAreaCoveragePercentThreshold: 50 });
   return (
-    <>
+    <Screen>
       <FlatList
         ref={flatListRef}
         data={sliderData}
@@ -104,7 +105,8 @@ export const InfoSliderScreen = () => {
                 currentIndex === sliderData.length - 1 ? "Get Started" : "Next"
               }
               onPress={() => {
-                if (currentIndex + 1 > sliderData.length - 1) return;
+                if (currentIndex + 1 > sliderData.length - 1)
+                  return navigation.navigate("PreLoginScreen");
                 flatListRef.current?.scrollToIndex({
                   index: currentIndex,
                 });
@@ -114,6 +116,6 @@ export const InfoSliderScreen = () => {
           </View>
         </View>
       </View>
-    </>
+    </Screen>
   );
 };

@@ -9,15 +9,15 @@ import {
 } from "react-native";
 import { Text } from "../../components/Text";
 import { LinearGradient } from "expo-linear-gradient";
+import { Screen } from "../../components/Screen";
+import type { ScreenProps } from "../../navigation/RouterTypes";
 
-export const WelcomeScreen = () => {
+export const WelcomeScreen = ({ navigation }: ScreenProps) => {
   //why is there only useWindowDimensions hook and not screen smh...
   const { width, height } = Dimensions.get("screen");
-  //as any for now
-  const navigation = useNavigation() as any;
 
   return (
-    <>
+    <Screen>
       <TouchableWithoutFeedback
         onPress={() => navigation.navigate("InfoSliderScreen")}
       >
@@ -50,7 +50,7 @@ export const WelcomeScreen = () => {
           </Text>
         </View>
       </ImageBackground>
-    </>
+    </Screen>
   );
 };
 

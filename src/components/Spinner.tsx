@@ -1,5 +1,5 @@
 import React from "react";
-import { Wave } from "react-native-animated-spinkit";
+import { Circle } from "react-native-animated-spinkit";
 import { colors } from "../style/styleConstants";
 
 interface SpinnerProps {
@@ -9,7 +9,7 @@ interface SpinnerProps {
 
 export const Spinner = ({
   color = colors.themeColor,
-  size = 50,
+  size = 70,
 }: SpinnerProps) => {
-  return <Wave color={color} size={size} />;
+  return <Circle color={color} size={size} />;
 };

@@ -10,7 +10,7 @@ import { Text } from "./Text";
 import { colors, sizes } from "../style/styleConstants";
 
 interface ButtonProps extends TouchableOpacityProps {
-  title: string;
+  title?: string;
   className?: ViewProps["className"];
   disabled?: boolean;
   outline?: boolean;
@@ -20,6 +20,7 @@ export const Button = ({
   className,
   style,
   outline,
+  children,
   ...props
 }: ButtonProps) => {
   const { onPress, title, ...otherProps } = props;
